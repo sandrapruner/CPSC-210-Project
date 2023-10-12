@@ -134,7 +134,7 @@ public class CreateWishList {
         System.out.println("Create new Book?");
         System.out.println("\t n = no");
         String answer = input.next();
-        if ("n" == answer) {
+        if (answer.equals("n")) {
             System.out.println("Ok, you are not creating a new Book");
         } else {
             newBook = createNewBook();
@@ -207,8 +207,7 @@ public class CreateWishList {
             if (null != found.getName()) {
                 newLibrary.addBook(found);
                 System.out.println(found.getName() + " Has been added to " + newLibrary.getName());
-            } else {
-                System.out.println("Could not find a Book of that name");
+//had line which was else, do not have that book
             }
         }
     }
