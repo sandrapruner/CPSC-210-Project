@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LibraryTest {
     Library testLibrary;
@@ -54,22 +53,22 @@ public class LibraryTest {
     @Test
     void testInLibrary(){
         Book testBook = testLibrary.inLibrary("Insomnia");
-        assertEquals(null, testBook.getName());
-        assertEquals(null, testBook.getAuthor());
-        assertEquals(null, testBook.getReading());
+        assertNull(testBook.getName());
+        assertNull(testBook.getAuthor());
+        assertNull(testBook.getReading());
 
         testLibrary.addBook(book1);
         testBook = testLibrary.inLibrary("The Iliad");
-        assertEquals(null, testBook.getName());
-        assertEquals(null, testBook.getAuthor());
-        assertEquals(null, testBook.getReading());
+        assertNull(testBook.getName());
+        assertNull(testBook.getAuthor());
+        assertNull(testBook.getReading());
 
         testLibrary.addBook(book2);
         testLibrary.addBook(book3);
         testBook = testLibrary.inLibrary("The Iliad");
         assertEquals("The Iliad", testBook.getName());
         assertEquals("Homer", testBook.getAuthor());
-        assertEquals(null, testBook.getReading());
+        assertNull(testBook.getReading());
     }
 
 }

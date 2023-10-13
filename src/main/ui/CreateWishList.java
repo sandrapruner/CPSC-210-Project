@@ -28,13 +28,12 @@ public class CreateWishList {
 
     private void runWishList() {
         boolean keepRunning = true;
-        String command = null;
 
         create();
 
         while (keepRunning) {
             displayMenu();
-            command = input.next();
+            String command = input.next();
             command = command.toLowerCase();
 
             if (command.equals("e")) {
@@ -162,6 +161,7 @@ public class CreateWishList {
             System.out.println("Added " + newBook.getName() + " by " + newBook.getAuthor() + " to your WishList");
 
         }
+        addBookToLibrary(newBook);
         return newBook;
     }
 
@@ -182,7 +182,7 @@ public class CreateWishList {
 
         }
         if (0 == addedbooktolibrary) {
-            System.out.println("Thats not a Library...");
+            System.out.println("That's not a Library...");
         }
     }
 

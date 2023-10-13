@@ -2,8 +2,7 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.ArrayList;
-import java.util.List;
+
 
 import static model.Reading.*;
 
@@ -25,13 +24,13 @@ public class BookTest {
     void testConstructor() {
         assertEquals("Politics", testBook.getName());
         assertEquals("Aristotle", testBook.getAuthor());
-        assertEquals(null, testBook.getReading());
+        assertNull(testBook.getReading());
     }
 
     @Test
     void testChangeReading() {
         // check that changeReading works for each change
-        assertEquals(null, testBook.getReading());
+        assertNull(testBook.getReading());
         testBook.changeReading();
         assertEquals(WANTTOREAD, testBook.getReading());
         testBook.changeReading();
@@ -48,13 +47,13 @@ public class BookTest {
         testBook.changeName("The Iliad");
         assertEquals("The Iliad", testBook.getName());
         assertEquals("Aristotle", testBook.getAuthor());
-        assertEquals(null, testBook.getReading());
+        assertNull(testBook.getReading());
 
         testBook.changeName("The Odyssey");
         testBook.changeName("Philosophy");
         assertEquals("Philosophy", testBook.getName());
         assertEquals("Aristotle", testBook.getAuthor());
-        assertEquals(null, testBook.getReading());
+        assertNull(testBook.getReading());
     }
 
     @Test
@@ -63,13 +62,13 @@ public class BookTest {
         testBook.changeAuthor("Socrates");
         assertEquals("Politics", testBook.getName());
         assertEquals("Socrates", testBook.getAuthor());
-        assertEquals(null, testBook.getReading());
+        assertNull(testBook.getReading());
 
         testBook.changeAuthor("Plato");
         testBook.changeAuthor("Alexander");
         assertEquals("Politics", testBook.getName());
         assertEquals("Alexander", testBook.getAuthor());
-        assertEquals(null, testBook.getReading());
+        assertNull(testBook.getReading());
 
     }
 

@@ -3,8 +3,8 @@ package model;
 import java.util.List;
 
 public class Library {
-    private String name;
-    private List<Book> books;
+    private final String name;
+    private final List<Book> books;
 
 
     public Library(String name, List<Book> books) {

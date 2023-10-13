@@ -48,9 +48,6 @@ public class Book {
                     break;
                 case READ:
                     break;
-                default:
-                    reading = WANTTOREAD;
-                    break;
             }
         }
 
