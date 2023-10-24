@@ -33,4 +33,6 @@ useful information for library books into **one**.
 wishlist to currently reading and completed.
 - I want to be able to add a new library with a catalogue of 
 books to a class/interface with libraries
+- I want to be able to have the choice to save my Booklist before I end the program.
+- I want to be able to reload a previous BookList when restarting my program.
 
