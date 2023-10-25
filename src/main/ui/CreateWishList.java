@@ -2,13 +2,21 @@ package ui;
 
 import model.Book;
 import model.Library;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+import persistence.Writable;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 // WishList application
-public class CreateWishList {
+public class CreateWishList implements Writable {
+    private static final String JSON_STORE = "./data/workroom.json";
     private List<Library> libraries;
     private List<Book> bookList;
     private Book book1;
@@ -19,10 +27,15 @@ public class CreateWishList {
     private Library ubc;
     private Library home;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
 
     //EFFECTS: runs WishList
-    public CreateWishList() {
+    public CreateWishList() throws FileNotFoundException {
+        input = new Scanner(System.in);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runWishList();
     }
 
@@ -39,6 +52,12 @@ public class CreateWishList {
             command = command.toLowerCase();
 
             if (command.equals("e")) {
+                System.out.println("Do you want to save your BookList?");
+                System.out.println("\ty = yes");
+                String save = input.next();
+                if (save.equals("y")) {
+                    saveBookList();
+                }
                 keepRunning = false;
             } else {
                 processCommand(command);
@@ -56,11 +75,14 @@ public class CreateWishList {
         System.out.println("\tl => add a new library");
         System.out.println("\tv => view your WishList");
         System.out.println("\tc => change a Books status in your WishList");
+        System.out.println("\ts -> save book list to file");
+        System.out.println("\tf -> load book list from file");
         System.out.println("\te => end WishList");
     }
 
     //MODIFIES: this
     //EFFECTS: takes users command and runs program based off of choice.
+    @SuppressWarnings("methodlength")
     public void processCommand(String command) {
         switch (command) {
             case "w" :
@@ -77,6 +99,12 @@ public class CreateWishList {
                 break;
             case "c" :
                 changeStatus();
+                break;
+            case "s" :
+                saveBookList();
+                break;
+            case "f" :
+                loadBookList();
                 break;
             default :
                 System.out.println("Not valid, please try again");
@@ -196,7 +224,6 @@ public class CreateWishList {
         } else {
             newBook = createNewBook();
         }
-        addBookToLibrary(newBook);
     }
 
     //MODIFIES: this
@@ -256,6 +283,27 @@ public class CreateWishList {
         libraries.add(library);
     }
 
+    private void saveBookList() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(bookList);
+            jsonWriter.close();
+            System.out.println("Saved BookList to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+
+    }
+
+    private void loadBookList() {
+        try {
+            bookList = jsonReader.read();
+            System.out.println("Loaded BookList from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
 
 
 
@@ -283,4 +331,22 @@ public class CreateWishList {
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", "bookList");
+        json.put("books", booksToJson());
+        return json;
+    }
+
+    private JSONArray booksToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Book b : bookList) {
+            jsonArray.put(b.toJson());
+        }
+        return jsonArray;
+    }
+
 }

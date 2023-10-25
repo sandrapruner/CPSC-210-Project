@@ -1,9 +1,12 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import static model.Reading.*;
 
 // represents Book with name, author, and reading status
-public class Book {
+public class Book implements Writable {
     private String name;
     private String author;
     private Reading reading;
@@ -61,5 +64,18 @@ public class Book {
             }
         }
 
+    }
+
+    public String toString() {
+        return name + "," + author + "," + reading;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("author", author);
+        json.put("reading", reading);
+        return json;
     }
 }
