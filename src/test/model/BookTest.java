@@ -72,6 +72,11 @@ public class BookTest {
 
     }
 
+    @Test
+    void printBook() {
+        assertEquals("Politics,Aristotle,null", testBook.toString());
+    }
+
 
 
 
