@@ -2,11 +2,9 @@ package ui;
 
 import model.Book;
 import model.Library;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import model.WishList;
 import persistence.JsonReader;
 import persistence.JsonWriter;
-import persistence.Writable;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,10 +13,10 @@ import java.util.List;
 import java.util.Scanner;
 
 // WishList application
-public class CreateWishList implements Writable {
-    private static final String JSON_STORE = "./data/workroom.json";
+public class CreateWishList {
+    private static final String JSON_STORE = "./data/bookList.json";
     private List<Library> libraries;
-    private List<Book> bookList;
+    private WishList wishlist;
     private Book book1;
     private Book book2;
     private Book book3;
@@ -163,7 +161,7 @@ public class CreateWishList implements Writable {
     //EFFECTS: prints out list of Books in wishlist.
     private void viewBooks() {
         System.out.println("The Books on your WishList are:");
-        for (Book b : bookList) {
+        for (Book b : wishlist.getWishList()) {
             System.out.println(b.getName() + " by " + b.getAuthor() + " and you are of status " + b.getReading());
         }
     }
@@ -171,13 +169,13 @@ public class CreateWishList implements Writable {
     //MODIFIES: this
     //EFFECTS: changes Reading status of a book in WishList.
     private void changeStatus() {
-        if (0 == bookList.size()) {
+        if (0 == wishlist.getWishList().size()) {
             System.out.println("You don't have any books in your WishList");
         } else {
             System.out.println("Please enter the name of the Book:");
             String answer = input.next();
             int hasbook = 0;
-            for (Book b : bookList) {
+            for (Book b : wishlist.getWishList()) {
                 if (answer.equals(b.getName())) {
                     b.changeReading();
                     System.out.println(b.getName() + "'s status has been changed to " + b.getReading());
@@ -208,7 +206,7 @@ public class CreateWishList implements Writable {
     //EFFECTS: adds Book to WishList and changes Reading status to WANTTOREAD
     private void addBook(Book book) {
         book.changeReading();
-        bookList.add(book);
+        wishlist.addBook(book);
         System.out.println("Added " +  book.getName() + " by " + book.getAuthor() + " to your WishList");
     }
 
@@ -231,7 +229,7 @@ public class CreateWishList implements Writable {
     private void addToWishList(String answer, Book book) {
         if (answer.equals("y")) {
             book.changeReading();
-            bookList.add(book);
+            wishlist.addBook(book);
             System.out.println("Added " + book.getName() + " by " + book.getAuthor() + " to your WishList");
 
         }
@@ -286,7 +284,7 @@ public class CreateWishList implements Writable {
     private void saveBookList() {
         try {
             jsonWriter.open();
-            jsonWriter.write(bookList);
+            jsonWriter.write(wishlist);
             jsonWriter.close();
             System.out.println("Saved BookList to " + JSON_STORE);
         } catch (FileNotFoundException e) {
@@ -297,7 +295,7 @@ public class CreateWishList implements Writable {
 
     private void loadBookList() {
         try {
-            bookList = jsonReader.read();
+            wishlist = jsonReader.read();
             System.out.println("Loaded BookList from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
@@ -327,26 +325,11 @@ public class CreateWishList implements Writable {
         this.libraries = new ArrayList<>();
         this.libraries.add(this.ubc);
         this.libraries.add(this.home);
-        this.bookList = new ArrayList<>();
+        this.wishlist = new WishList("wishlist");
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
 
-    @Override
-    public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        json.put("name", "bookList");
-        json.put("books", booksToJson());
-        return json;
-    }
 
-    private JSONArray booksToJson() {
-        JSONArray jsonArray = new JSONArray();
-
-        for (Book b : bookList) {
-            jsonArray.put(b.toJson());
-        }
-        return jsonArray;
-    }
 
 }

@@ -1,0 +1,15 @@
+{
+    "books": [
+        {
+            "author": "aristotle",
+            "name": "politics",
+            "reading": "READING"
+        },
+        {
+          "author": "hh",
+            "name" : "hh",
+            "reading" : "READING"
+        }
+    ],
+    "name": "wishlist"
+}

@@ -66,6 +66,10 @@ public class Book implements Writable {
 
     }
 
+    public void changeReading(Reading reading) {
+        this.reading = reading;
+    }
+
     public String toString() {
         return name + "," + author + "," + reading;
     }

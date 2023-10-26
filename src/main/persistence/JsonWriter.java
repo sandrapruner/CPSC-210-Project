@@ -1,10 +1,11 @@
 package persistence;
 
-import model.Book;
-import org.json.JSONArray;
+import model.WishList;
 import org.json.JSONObject;
-import java.io.*;
-import java.util.List;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
 public class JsonWriter {
     private static final int TAB = 4;
@@ -19,25 +20,25 @@ public class JsonWriter {
         writer = new PrintWriter(new File(destination));
     }
 
-    public void write(List<Book> bl) {
-        //JSONObject json = bl.toJson();
-        saveToFile(bookListToJson(bl).toString(TAB));
+    public void write(WishList wl) {
+        JSONObject json = wl.toJson();
+        saveToFile(json.toString(TAB));
     }
 
-    private JSONObject bookListToJson(List<Book> bl) {
-        JSONObject json = new JSONObject();
-        json.put("books", booksToJson(bl));
-        json.put("name", "bookList");
-        return json;
-    }
-
-    private JSONArray booksToJson(List<Book> bl) {
-        JSONArray jsonArray = new JSONArray();
-        for (Book b : bl) {
-            jsonArray.put(b.toJson());
-        }
-        return jsonArray;
-    }
+//    private JSONObject bookListToJson(WishList wl) {
+//        JSONObject json = new JSONObject();
+//        json.put("books", booksToJson(wl));
+//        json.put("name", "bookList");
+//        return json;
+//    }
+//
+//    private JSONArray booksToJson(WishList wl) {
+//        JSONArray jsonArray = new JSONArray();
+//        for (Book b : wl.getWish) {
+//            jsonArray.put(b.toJson());
+//        }
+//        return jsonArray;
+//    }
 
 
     public void close() {

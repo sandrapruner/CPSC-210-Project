@@ -1,20 +1,16 @@
 package persistence;
 
 import model.Book;
-
+import model.Reading;
+import model.WishList;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.stream.Stream;
-
-import model.Reading;
-
-import org.json.*;
-
-import java.util.List;
 
 public class JsonReader {
     private String source;
@@ -23,10 +19,10 @@ public class JsonReader {
         this.source = source;
     }
 
-    public List<Book> read() throws IOException {
+    public WishList read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
-        return parseBookList(jsonObject);
+        return parseWishList(jsonObject);
     }
 
     private String readFile(String source) throws IOException {
@@ -39,27 +35,29 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    private List<Book> parseBookList(JSONObject jsonObject) {
-        List<Book> bl = new ArrayList<>();
-        addBooks(bl, jsonObject);
-        return bl;
+    private WishList parseWishList(JSONObject jsonObject) {
+        String name = jsonObject.getString("name");
+        WishList wl = new WishList(name);
+        addBooks(wl, jsonObject);
+        return wl;
     }
 
-    private void addBooks(List<Book> bl, JSONObject jsonObject) {
+    private void addBooks(WishList wl, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("books");
         for (Object json : jsonArray) {
             JSONObject nextBooks = (JSONObject) json;
-            addBook(bl, nextBooks);
+            addBook(wl, nextBooks);
         }
     }
 
-    private void addBook(List<Book> bl, JSONObject jsonObject) {
+    private void addBook(WishList wl, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         String author = jsonObject.getString("author");
         Reading reading = Reading.valueOf(jsonObject.getString("reading"));
         Book book = new Book(name, author);
+        book.changeReading(reading);
         //MAKE CHANGE READING FUNCTION
         //MAKE BOOKLIST A CLASS???
-        bl.add(book);
+        wl.addBook(book);
     }
 }
