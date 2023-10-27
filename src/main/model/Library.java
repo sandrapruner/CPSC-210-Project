@@ -8,7 +8,7 @@ public class Library {
     private final List<Book> books;
 
     //REQUIRES: name is of non-zero length
-    //EFFECTS: this.nam is set to name, this.books is set to books.
+    //EFFECTS: this.name is set to name, this.books is set to books.
     public Library(String name, List<Book> books) {
         this.books = books;
         this.name = name;

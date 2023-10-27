@@ -7,10 +7,12 @@ import persistence.Writable;
 import java.util.ArrayList;
 import java.util.List;
 
+// represents a WishList with a name and list of Books.
 public class WishList implements Writable {
     private String name;
     private List<Book> wishlist;
 
+    //EFFECTS: constructs a wishlist with name and empty list of Books.
     public WishList(String name) {
         this.name = name;
         wishlist = new ArrayList<>();
@@ -24,10 +26,14 @@ public class WishList implements Writable {
         return wishlist;
     }
 
+    //MODIFIES: this.
+    //EFFECTS: changes name of WishList to name.
     public void changeName(String name) {
         this.name = name;
     }
 
+    //MODIFIES: this.
+    //EFFECTS: adds a Book to list of Books in WishList.
     public void addBook(Book b) {
         wishlist.add(b);
     }
@@ -40,6 +46,7 @@ public class WishList implements Writable {
         return json;
     }
 
+    //EFFECTS: retrieves and returns List of Books in WishList as a JSON Array.
     private JSONArray booksToJson() {
         JSONArray jsonArray = new JSONArray();
 

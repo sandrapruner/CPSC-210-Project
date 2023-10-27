@@ -66,10 +66,13 @@ public class Book implements Writable {
 
     }
 
+    //MODIFIES: this
+    //EFFECTS: changes reading status of Book to reading.
     public void changeReading(Reading reading) {
         this.reading = reading;
     }
 
+    //EFFECTS: returns string of this Book with name, author, and reading status.
     public String toString() {
         return name + "," + author + "," + reading;
     }

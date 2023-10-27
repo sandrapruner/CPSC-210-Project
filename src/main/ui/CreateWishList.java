@@ -29,7 +29,7 @@ public class CreateWishList {
     private JsonReader jsonReader;
 
 
-    //EFFECTS: runs WishList
+    //EFFECTS: constructs and runs WishList
     public CreateWishList() throws FileNotFoundException {
         input = new Scanner(System.in);
         jsonWriter = new JsonWriter(JSON_STORE);
@@ -54,7 +54,7 @@ public class CreateWishList {
                 System.out.println("\ty = yes");
                 String save = input.next();
                 if (save.equals("y")) {
-                    saveBookList();
+                    saveWishList();
                 }
                 keepRunning = false;
             } else {
@@ -99,7 +99,7 @@ public class CreateWishList {
                 changeStatus();
                 break;
             case "s" :
-                saveBookList();
+                saveWishList();
                 break;
             case "f" :
                 loadBookList();
@@ -281,7 +281,9 @@ public class CreateWishList {
         libraries.add(library);
     }
 
-    private void saveBookList() {
+
+    //EFFECTS: saves wishList to file
+    private void saveWishList() {
         try {
             jsonWriter.open();
             jsonWriter.write(wishlist);
@@ -293,6 +295,8 @@ public class CreateWishList {
 
     }
 
+    //MODIFIES: this
+    //EFFECTS: loads wishlist from file.
     private void loadBookList() {
         try {
             wishlist = jsonReader.read();

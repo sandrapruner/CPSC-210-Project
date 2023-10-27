@@ -36,3 +36,7 @@ books to a class/interface with libraries
 - I want to be able to have the choice to save my Booklist before I end the program.
 - I want to be able to reload a previous BookList when restarting my program.
 
+## Citation
+
+JsonSerializationDemo-WorkRoomApp.java
+- references to add save/load functions to wishlist.
