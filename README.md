@@ -38,6 +38,4 @@ books to a class/interface with libraries
 
 ## Citation
 
-JsonSerializationDemo-WorkRoomApp.java
-- references to add save/load functions to wishlist.
-- 
+"Code influced by the JsonSerizalizationDemo https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
