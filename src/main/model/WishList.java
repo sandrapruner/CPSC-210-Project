@@ -38,6 +38,15 @@ public class WishList implements Writable {
         wishlist.add(b);
     }
 
+    //EFFECTS: returns string of WishList
+    public String getBooks() {
+        String wl = name + ": ";
+        for (Book b : wishlist) {
+            wl = wl + b.getName() + " by " + b.getAuthor() + ", ";
+        }
+        return wl;
+    }
+
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

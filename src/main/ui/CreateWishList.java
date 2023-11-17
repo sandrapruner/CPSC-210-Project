@@ -6,6 +6,12 @@ import model.WishList;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,6 +20,12 @@ import java.util.Scanner;
 
 // WishList application
 public class CreateWishList {
+//    private JFrame frame;
+//    private JPanel panel;
+//    private JButton button;
+//    private JLabel label;
+
+
     private static final String JSON_STORE = "./data/bookList.json";
     private List<Library> libraries;
     private WishList wishlist;
@@ -34,8 +46,18 @@ public class CreateWishList {
         input = new Scanner(System.in);
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+        //runGUI();
         runWishList();
+
+
+
     }
+
+
+
+
+
+
 
     //MODIFIES: this
     //EFFECTS: runs WishList and processes user command
@@ -83,28 +105,28 @@ public class CreateWishList {
     @SuppressWarnings("methodlength")
     public void processCommand(String command) {
         switch (command) {
-            case "w" :
+            case "w":
                 addBookToWishList();
                 break;
-            case "b" :
+            case "b":
                 createNewBook();
                 break;
-            case "l" :
+            case "l":
                 newLibrary();
                 break;
-            case "v" :
+            case "v":
                 viewBooks();
                 break;
-            case "c" :
+            case "c":
                 changeStatus();
                 break;
-            case "s" :
+            case "s":
                 saveWishList();
                 break;
-            case "f" :
+            case "f":
                 loadBookList();
                 break;
-            default :
+            default:
                 System.out.println("Not valid, please try again");
         }
     }
@@ -112,7 +134,7 @@ public class CreateWishList {
     //MODIFIES: this
     //EFFECTS: adds Book from library to wishlist,
     // if the book is not in the library, creates book.
-    private void addBookToWishList() {
+    public void addBookToWishList() {
         System.out.println("What is the name of the book you want to add?");
         String name = input.next();
         Book found = new Book(null, null);
@@ -207,7 +229,7 @@ public class CreateWishList {
     private void addBook(Book book) {
         book.changeReading();
         wishlist.addBook(book);
-        System.out.println("Added " +  book.getName() + " by " + book.getAuthor() + " to your WishList");
+        System.out.println("Added " + book.getName() + " by " + book.getAuthor() + " to your WishList");
     }
 
     //MODIFIES: this
@@ -283,7 +305,7 @@ public class CreateWishList {
 
 
     //EFFECTS: saves wishList to file
-    private void saveWishList() {
+    public void saveWishList() {
         try {
             jsonWriter.open();
             jsonWriter.write(wishlist);
@@ -306,6 +328,19 @@ public class CreateWishList {
         }
     }
 
+    //EFFECTS: returns string of WishList
+    public String getBooks() {
+        if (wishlist == null) {
+            return "";
+        } else {
+
+            String wl = wishlist.getName() + ": ";
+            for (Book b : wishlist.getWishList()) {
+                wl.concat(b.getName() + " by " + b.getAuthor());
+            }
+            return wl;
+        }
+    }
 
 
 
@@ -333,7 +368,5 @@ public class CreateWishList {
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
-
-
 
 }
