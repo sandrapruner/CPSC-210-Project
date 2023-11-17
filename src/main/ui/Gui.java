@@ -37,60 +37,37 @@ public class Gui {
     private JButton bookbutton;
     private JButton savebutton;
     private JButton loadbutton;
+    private JButton librarybutton;
     private JLabel label;
     private JTextArea editTextArea;
     private JTextArea titleTextArea;
+    private ImageIcon cover;
+    private JLabel imageAsLabel;
 
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public Gui() {
         create();
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
+        initialize();
 
-        this.label = new JLabel(wishlist.getBooks());
+        addButton();
 
-        this.panel = new JPanel();
+        saveButton();
 
-        this.frame = new JFrame();
+        loadButton();
 
-        this.addbutton = new JButton("Add Book");
-        addbutton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addBookToGui();
-                label.setText(wishlist.getBooks());
-
-            }
-        });
-
-        this.savebutton = new JButton("Save WishList");
-        savebutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saveWishList();
-            }
-        });
-
-        this.loadbutton = new JButton("Load WishList");
-        loadbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loadWishList();
-                label.setText(wishlist.getBooks());
-            }
-        });
+        librariesButton();
 
 
-        panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
-        panel.setPreferredSize(new Dimension(1000, 500));
-        panel.setLayout(new GridLayout(0, 1));
-        panel.add(label, BorderLayout.CENTER);
-        panel.add(addbutton, BorderLayout.SOUTH);
-        panel.add(savebutton);
-        panel.add(loadbutton);
+        this.cover = new ImageIcon();
+        this.imageAsLabel = new JLabel(cover);
 
 
+        initializePanel();
 
-        newFrame();
+
+        initializeFrame();
+
+
 
 
 
@@ -102,58 +79,175 @@ public class Gui {
 
     }
 
+    //MODIFIES: this
+    //EFFECTS: creates panel and adds Buttons to panel;
+    private void initializePanel() {
+        panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
+        panel.setPreferredSize(new Dimension(1000, 1000));
+        panel.setLayout(new GridLayout(0, 1));
 
 
-    public void addBookToGui() {
-        panel.add(editTextArea);
-        panel.add(titleTextArea);
-        panel.add(bookbutton);
-        newFrame();
+        panel.add(label);
 
 
-        bookbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String title = titleTextArea.getText();
-                Book found = new Book(null, null);
-                Book isfound = bookInLibrary(title, found);
-                if (isfound.getName() != null) {
-                    addBook(isfound);
-                } else {
-                    System.out.println("Cannot find book in Library");
-                }
-                titleTextArea.setText("");
-                label.setText(wishlist.getBooks());
-                panel.remove(editTextArea);
-                panel.remove(titleTextArea);
-                panel.remove(bookbutton);
-            }
-            });
+        panel.add(addbutton);
+
+
+        panel.add(savebutton);
+
+
+        panel.add(loadbutton);
+
+
+        panel.add(imageAsLabel);
+
+
+        panel.add(librarybutton);
+
 
 
     }
 
     //MODIFIES: this
-    //EFFECTS: creates 2 libraries and 3 books, adds books to libraries.
-    //          creates empty WishList.
-    private void create() {
-        this.library1 = new ArrayList<>();
-        this.library2 = new ArrayList<>();
-        this.book1 = new Book("Politics", "Aristotle");
-        this.book2 = new Book("Heroes", "Stephen Fry");
-        this.book3 = new Book("The Stars are also Fire", "Paul Anderson");
-        this.library1.add(book1);
-        this.library1.add(book2);
-        this.library1.add(book3);
-        this.library2.add(book1);
-        this.library2.add(book2);
-        this.ubc = new Library("ubc", this.library2);
-        this.home = new Library("home", this.library1);
-        this.libraries = new ArrayList<>();
-        this.libraries.add(this.ubc);
-        this.libraries.add(this.home);
-        this.wishlist = new WishList("wishlist");
+    //EFFECTS: adds Panel to frame and initializes it
+    private void initializeFrame() {
+        frame.add(panel, BorderLayout.CENTER);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle("WishList");
+        frame.pack();
+        frame.setVisible(true);
     }
+
+    //MODIFIES: this
+    //EFFECTS: creates loadWishList button
+    private void loadButton() {
+        this.loadbutton = new JButton("Load WishList");
+        loadbutton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                loadWishList();
+                label.setText(wishlist.getBooks());
+            }
+        });
+    }
+
+    //MODIFIES: this
+    //EFFECTS: create saveWishList Button
+    private void saveButton() {
+        this.savebutton = new JButton("Save WishList");
+        savebutton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                saveWishList();
+            }
+        });
+    }
+
+    //MODIFIES: this
+    //EFFECTS: Creates addBook button
+    private void addButton() {
+        this.addbutton = new JButton("Add Book");
+        addbutton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                addBookToGui();
+                label.setText(wishlist.getBooks());
+            }
+        });
+    }
+
+    //MODIFIES: this
+    //EFFECTS: creates viewLibraries Button
+    private void librariesButton() {
+        this.librarybutton = new JButton("View all Libraries");
+        librarybutton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                viewLibraries();
+            }
+        });
+
+    }
+
+    //MODIFIES: this
+    //EFFECTS: intializes jsonWriter/Reader, label, panel, and fram
+    private void initialize() {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+
+        this.label = new JLabel(wishlist.getBooks());
+
+        this.panel = new JPanel();
+
+        this.frame = new JFrame();
+    }
+
+
+
+    private void viewLibraries() {
+        JLabel lib = new JLabel("Libraries:");
+        panel.add(lib);
+        JLabel libs = new JLabel();
+        String s = "Libraries: ";
+        for (Library l : libraries) {
+            libs = new JLabel(l.getName() + "; " + l.getAllBooks());
+            panel.add(libs);
+        }
+        //alllibraries.setText(s);
+        initializeFrame();
+    }
+
+
+
+
+    public void addBookToGui() {
+
+        panel.add(editTextArea);
+
+        panel.add(titleTextArea);
+
+        panel.add(bookbutton);
+        initializeFrame();
+
+
+        bookButton();
+    }
+
+    //MODIFIES: this
+    //EFFECTS: creates New Book button
+    private void bookButton() {
+        bookbutton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JLabel img = findBook();
+                titleTextArea.setText("");
+                label.setText(wishlist.getBooks());
+                panel.remove(editTextArea);
+                panel.remove(titleTextArea);
+                panel.remove(bookbutton);
+                panel.remove(imageAsLabel);
+
+                imageAsLabel = img;
+                //initializePanel();
+
+
+                initializeFrame();
+            }
+            });
+    }
+
+    //MODIFIES: this
+    //EFFECTS: goes through books in Library and adds to wishlist if found
+    private JLabel findBook() {
+        String title = titleTextArea.getText();
+        Book found = new Book(null, null, null);
+        Book isfound = bookInLibrary(title, found);
+        if (isfound.getName() != null) {
+            addBook(isfound);
+            return new JLabel(isfound.getCover());
+
+        } else {
+            System.out.println("Cannot find book in Library");
+            return new JLabel();
+        }
+    }
+
+
 
     //REQUIRES: name is of non-zero length, found has name null
     //MODIFIES: this
@@ -174,7 +268,6 @@ public class Gui {
     private void addBook(Book book) {
         book.changeReading();
         wishlist.addBook(book);
-        System.out.println("Added " + book.getName() + " by " + book.getAuthor() + " to your WishList");
     }
 
     //EFFECTS: saves wishList to file
@@ -200,13 +293,37 @@ public class Gui {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
-    private void newFrame() {
 
-        frame.add(panel, BorderLayout.CENTER);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("WishList");
-        frame.pack();
-        frame.setVisible(true);
+    //EFFECTS: returns ImageIcon of png
+    private ImageIcon getImageIcon(String png) {
+        String sep = System.getProperty("file.separator");
+        ImageIcon img = new ImageIcon(System.getProperty("user.dir")
+                + sep + "images" + sep + png);
+        return img;
+    }
+
+    //MODIFIES: this
+    //EFFECTS: creates 2 libraries and 3 books, adds books to libraries.
+    //          creates empty WishList.
+    private void create() {
+        String sep = System.getProperty("file.separator");
+
+        this.library1 = new ArrayList<>();
+        this.library2 = new ArrayList<>();
+        this.book1 = new Book("Politics", "Aristotle", getImageIcon("Politics.png"));
+        this.book2 = new Book("Heroes", "Stephen Fry", getImageIcon("Heroes.png"));
+        this.book3 = new Book("The Stars are also Fire", "Paul Anderson", getImageIcon("Stars.png"));
+        this.library1.add(book1);
+        this.library1.add(book2);
+        this.library1.add(book3);
+        this.library2.add(book1);
+        this.library2.add(book2);
+        this.ubc = new Library("ubc", this.library2);
+        this.home = new Library("home", this.library1);
+        this.libraries = new ArrayList<>();
+        this.libraries.add(this.ubc);
+        this.libraries.add(this.home);
+        this.wishlist = new WishList("wishlist");
     }
 
 

@@ -64,7 +64,7 @@ public class JsonReader {
         String name = jsonObject.getString("name");
         String author = jsonObject.getString("author");
         Reading reading = Reading.valueOf(jsonObject.getString("reading"));
-        Book book = new Book(name, author);
+        Book book = new Book(name, author, null);
         book.changeReading(reading);
         wl.addBook(book);
     }

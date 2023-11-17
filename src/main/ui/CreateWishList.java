@@ -137,7 +137,7 @@ public class CreateWishList {
     public void addBookToWishList() {
         System.out.println("What is the name of the book you want to add?");
         String name = input.next();
-        Book found = new Book(null, null);
+        Book found = new Book(null, null, null);
         Book isfound = bookInLibrary(name, found);
         if (isfound.getName() != null) {
             addBook(isfound);
@@ -151,7 +151,7 @@ public class CreateWishList {
     //MODIFIES: Library
     //EFFECTS: creates a book and adds to a library, returns created Book
     private Book createNewBook() {
-        Book newBook = new Book(null, null);
+        Book newBook = new Book(null, null, null);
         System.out.println("What is the name of your Book?");
         String name = input.next();
         System.out.println("Who is the author of your Book?");
@@ -235,7 +235,7 @@ public class CreateWishList {
     //MODIFIES: this
     //EFFECTS: Creates new Book if user answers "n" to prompt
     private void newBook() {
-        Book newBook = new Book(null, null);
+        Book newBook = new Book(null, null, null);
         System.out.println("Create new Book?");
         System.out.println("\t n = no");
         String answer = input.next();
@@ -290,7 +290,7 @@ public class CreateWishList {
         if (answer.equals("y")) {
             System.out.println("What is the name of the Book?");
             String name = input.next();
-            Book found = new Book(null, null);
+            Book found = new Book(null, null, null);
             Book isfound = bookInLibrary(name, found);
             if (isfound.getName() != null) {
                 library.addBook(isfound);
@@ -351,9 +351,9 @@ public class CreateWishList {
     private void create() {
         this.library1 = new ArrayList<>();
         this.library2 = new ArrayList<>();
-        this.book1 = new Book("Politics", "Aristotle");
-        this.book2 = new Book("Heroes", "Stephen Fry");
-        this.book3 = new Book("The Stars are also Fire", "Paul Anderson");
+        this.book1 = new Book("Politics", "Aristotle", null);
+        this.book2 = new Book("Heroes", "Stephen Fry", null);
+        this.book3 = new Book("The Stars are also Fire", "Paul Anderson", null);
         this.library1.add(book1);
         this.library1.add(book2);
         this.library1.add(book3);

@@ -33,13 +33,22 @@ public class Library {
     //EFFECTS: goes through books in library, if a name of Book matches with name,
     //          sets found to that book, returns found
     public Book inLibrary(String name) {
-        Book found = new Book(null, null);
+        Book found = new Book(null, null, null);
         for (Book b : books) {
             if (name.equals(b.getName())) {
                 found = b;
             }
         }
         return found;
+    }
+
+    //EFFECTS: return String ListOfBooks
+    public String getAllBooks() {
+        String s = "";
+        for (Book b : books) {
+            s = s + b.getName() + " by " + b.getAuthor() + ". ";
+        }
+        return s;
     }
 
 

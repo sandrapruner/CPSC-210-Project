@@ -3,6 +3,9 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
+import javax.swing.*;
+import java.awt.*;
+
 import static model.Reading.*;
 
 // represents Book with name, author, and reading status
@@ -10,14 +13,16 @@ public class Book implements Writable {
     private String name;
     private String author;
     private Reading reading;
+    private ImageIcon cover;
 
     // REQUIRES: Book has non-zero length name and author
     // EFFECTS: this.name is set to name, this.author is set to author,
     //          reading status set to null.
-    public Book(String name, String author) {
+    public Book(String name, String author, ImageIcon img) {
         this.name = name;
         this.author = author;
         this.reading = null;
+        this.cover = img;
     }
 
     public String getName() {
@@ -30,6 +35,10 @@ public class Book implements Writable {
 
     public Reading getReading() {
         return reading;
+    }
+
+    public ImageIcon getCover() {
+        return cover;
     }
 
     //REQUIRES: name is of non-zero length
