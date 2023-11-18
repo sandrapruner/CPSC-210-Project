@@ -45,6 +45,12 @@ public class Gui {
     private List<JLabel> alllibraries;
     private JButton startbutton;
     private JLabel start;
+    private JButton addlib;
+    private JTextArea eextArea;
+    private JTextArea textArea;
+    private JTextArea aextArea;
+    private JButton sendbook;
+    private JTextArea lextArea;
 
     public Gui() {
         create();
@@ -78,6 +84,8 @@ public class Gui {
 
         addButton();
 
+        addlibButton();
+
         saveButton();
 
         loadButton();
@@ -103,6 +111,12 @@ public class Gui {
         this.titleTextArea = new JTextArea("");
         this.alllibraries = new ArrayList<>();
 
+        this.eextArea = new JTextArea("What is the Title and Author of Your Book? What Library will it go to? ");
+        this.sendbook = new JButton("Send Book");
+        eextArea.setEditable(false);
+        this.textArea = new JTextArea("");
+        this.aextArea = new JTextArea("");
+        this.lextArea = new JTextArea("");
     }
 
     //MODIFIES: this
@@ -114,6 +128,8 @@ public class Gui {
 
 
         panel.add(addbutton);
+
+        panel.add(addlib);
 
 
         panel.add(savebutton);
@@ -165,9 +181,20 @@ public class Gui {
     }
 
     //MODIFIES: this
+    //EFFECTS: Creates addlib button
+    private void addlibButton() {
+        this.addlib = new JButton("Add Book To Library");
+        addbutton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                addBookToLib();
+            }
+        });
+    }
+
+    //MODIFIES: this
     //EFFECTS: Creates addBook button
     private void addButton() {
-        this.addbutton = new JButton("Add Book");
+        this.addbutton = new JButton("Add Book To Wishlist");
         addbutton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 addBookToGui();
@@ -175,6 +202,8 @@ public class Gui {
             }
         });
     }
+
+
 
     //MODIFIES: this
     //EFFECTS: creates viewLibraries Button
@@ -236,6 +265,60 @@ public class Gui {
 
 
         bookButton();
+    }
+
+    public void addBookToLib() {
+
+        panel.add(eextArea);
+
+        panel.add(textArea);
+
+        panel.add(aextArea);
+
+        panel.add(lextArea);
+
+        panel.add(sendbook);
+
+        initializeFrame();
+
+
+        libButton();
+    }
+
+    //MODIFIES: this
+    //EFFECTS: creates New lib button
+    private void libButton() {
+        sendbook.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Book b = new Book(eextArea.getText(), aextArea.getText(), null);
+                eextArea.setText("");
+                aextArea.setText("");
+
+                addbooktothislib(lextArea.getText(), b);
+
+                panel.remove(eextArea);
+                panel.remove(textArea);
+                panel.remove(lextArea);
+                panel.remove(aextArea);
+                panel.remove(sendbook);
+
+
+
+
+
+                initializeFrame();
+            }
+        });
+    }
+
+    //MODIFIES: this
+    //EFFECTS: adds book to lib given, does nothing if no library
+    private void addbooktothislib(String lname, Book b) {
+        for (Library l : libraries) {
+            if (l.getName() == lname) {
+                l.addBook(b);
+            }
+        }
     }
 
     //MODIFIES: this
