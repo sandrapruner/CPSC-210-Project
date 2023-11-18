@@ -290,7 +290,7 @@ public class Gui {
     private void libButton() {
         sendbook.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Book b = new Book(eextArea.getText(), aextArea.getText(), null);
+                Book b = new Book(textArea.getText(), aextArea.getText(), null);
                 eextArea.setText("");
                 aextArea.setText("");
 
