@@ -42,7 +42,7 @@ public class WishList implements Writable {
     public String getBooks() {
         String wl = name + ": ";
         for (Book b : wishlist) {
-            wl = wl + b.getName() + " by " + b.getAuthor() + ", ";
+            wl = wl + b.getName() + " by " + b.getAuthor() + " of status; " + b.getReading() + ", ";
         }
         return wl;
     }

@@ -27,7 +27,6 @@ public class Gui {
     private List<Book> library2;
     private Library ubc;
     private Library home;
-    private Scanner input;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
@@ -43,11 +42,39 @@ public class Gui {
     private JTextArea titleTextArea;
     private ImageIcon cover;
     private JLabel imageAsLabel;
+    private List<JLabel> alllibraries;
+    private JButton startbutton;
+    private JLabel start;
 
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public Gui() {
         create();
         initialize();
+
+        this.start = new JLabel(getImageIcon("wishlist.png"));
+
+        this.startbutton = new JButton("Start Wishlist:");
+        startbutton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                next();
+            }
+        });
+
+        this.panel = new JPanel();
+        panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
+        panel.setPreferredSize(new Dimension(1000, 1000));
+        panel.setLayout(new GridLayout(0, 1));
+
+        panel.add(start);
+        panel.add(startbutton);
+
+        initializeFrame();
+    }
+
+    //MODIFIES: this
+    //EFFECTS: creates next screen
+    private void next() {
+        panel.remove(start);
+        panel.remove(startbutton);
 
         addButton();
 
@@ -63,8 +90,6 @@ public class Gui {
 
 
         initializePanel();
-
-
         initializeFrame();
 
 
@@ -76,15 +101,13 @@ public class Gui {
         this.bookbutton = new JButton("Send Title");
         editTextArea.setEditable(false);
         this.titleTextArea = new JTextArea("");
+        this.alllibraries = new ArrayList<>();
 
     }
 
     //MODIFIES: this
     //EFFECTS: creates panel and adds Buttons to panel;
     private void initializePanel() {
-        panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
-        panel.setPreferredSize(new Dimension(1000, 1000));
-        panel.setLayout(new GridLayout(0, 1));
 
 
         panel.add(label);
@@ -181,13 +204,19 @@ public class Gui {
 
 
     private void viewLibraries() {
-        JLabel lib = new JLabel("Libraries:");
-        panel.add(lib);
-        JLabel libs = new JLabel();
-        String s = "Libraries: ";
+        for (JLabel jl : alllibraries) {
+            panel.remove(jl);
+        }
+        initializeFrame();
+        alllibraries = new ArrayList<>();
+        JLabel jlabel = new JLabel("Libraries: ");
+        alllibraries.add(jlabel);
+        panel.add(jlabel);
+
         for (Library l : libraries) {
-            libs = new JLabel(l.getName() + "; " + l.getAllBooks());
-            panel.add(libs);
+            JLabel j = new JLabel(l.getName() + "; " + l.getAllBooks());
+            alllibraries.add(j);
+            panel.add(j);
         }
         //alllibraries.setText(s);
         initializeFrame();
