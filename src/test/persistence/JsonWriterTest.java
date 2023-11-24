@@ -46,8 +46,8 @@ public class JsonWriterTest extends JsonTest {
     void testWriterGeneralWorkroom() {
         try {
             WishList wr = new WishList("wishlist");
-            wr.addBook(new Book("politics", "aristotle"));
-            wr.addBook(new Book("hh", "hh"));
+            wr.addBook(new Book("politics", "aristotle", null));
+            wr.addBook(new Book("hh", "hh", null));
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralWishList.json");
             writer.open();
             writer.write(wr);

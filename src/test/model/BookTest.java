@@ -15,7 +15,7 @@ public class BookTest {
 
     @BeforeEach
     void runBefore() {
-        testBook = new Book("Politics", "Aristotle");
+        testBook = new Book("Politics", "Aristotle", null);
 
 
     }

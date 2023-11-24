@@ -47,6 +47,8 @@ public class Gui {
     private JLabel start;
     private JButton addlib;
     private JTextArea eextArea;
+    private JTextArea authorArea;
+    private JTextArea libraryArea;
     private JTextArea textArea;
     private JTextArea aextArea;
     private JButton sendbook;
@@ -111,7 +113,9 @@ public class Gui {
         this.titleTextArea = new JTextArea("");
         this.alllibraries = new ArrayList<>();
 
-        this.eextArea = new JTextArea("What is the Title and Author of Your Book? What Library will it go to? ");
+        this.eextArea = new JTextArea("What is the Title of the Book? ");
+        this.authorArea = new JTextArea("Who is the Author of the Book? ");
+        this.libraryArea = new JTextArea("Which library would you like the book to go to? ");
         this.sendbook = new JButton("Send Book");
         eextArea.setEditable(false);
         this.textArea = new JTextArea("");
@@ -184,7 +188,7 @@ public class Gui {
     //EFFECTS: Creates addlib button
     private void addlibButton() {
         this.addlib = new JButton("Add Book To Library");
-        addbutton.addActionListener(new ActionListener() {
+        addlib.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 addBookToLib();
             }
@@ -273,7 +277,11 @@ public class Gui {
 
         panel.add(textArea);
 
+        panel.add(authorArea);
+
         panel.add(aextArea);
+
+        panel.add(libraryArea);
 
         panel.add(lextArea);
 
@@ -298,6 +306,8 @@ public class Gui {
 
                 panel.remove(eextArea);
                 panel.remove(textArea);
+                panel.remove(authorArea);
+                panel.remove(libraryArea);
                 panel.remove(lextArea);
                 panel.remove(aextArea);
                 panel.remove(sendbook);
@@ -315,7 +325,7 @@ public class Gui {
     //EFFECTS: adds book to lib given, does nothing if no library
     private void addbooktothislib(String lname, Book b) {
         for (Library l : libraries) {
-            if (l.getName() == lname) {
+            if (l.getName().equals(lname)) {
                 l.addBook(b);
             }
         }

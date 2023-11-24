@@ -21,9 +21,9 @@ public class LibraryTest {
     void runBefore() {
         testLibraryBooks = new ArrayList<>();
         testLibrary = new Library("home", testLibraryBooks);
-        book1 = new Book("Insomnia", "King");
-        book2 = new Book("The Iliad", "Homer");
-        book3 = new Book("Passenger", "Smith");
+        book1 = new Book("Insomnia", "King", null);
+        book2 = new Book("The Iliad", "Homer", null);
+        book3 = new Book("Passenger", "Smith", null);
     }
 
     @Test
