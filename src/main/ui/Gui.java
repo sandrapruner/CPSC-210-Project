@@ -54,6 +54,8 @@ public class Gui {
     private JButton sendbook;
     private JTextArea lextArea;
 
+    //MODIFIES: this
+    //EFFECTS: creates initial 'homescreen'
     public Gui() {
         create();
         initialize();
@@ -79,7 +81,7 @@ public class Gui {
     }
 
     //MODIFIES: this
-    //EFFECTS: creates next screen
+    //EFFECTS: creates next screen of all buttons/options
     private void next() {
         panel.remove(start);
         panel.remove(startbutton);
@@ -103,10 +105,12 @@ public class Gui {
         initializeFrame();
 
 
+        addText();
+    }
 
-
-
-
+    //MODIFIES: this
+    //EFFECTS: adds text to all TextAreas and some buttons.
+    private void addText() {
         this.editTextArea = new JTextArea("What is The title of Your Book? ");
         this.bookbutton = new JButton("Send Title");
         editTextArea.setEditable(false);
@@ -116,6 +120,8 @@ public class Gui {
         this.eextArea = new JTextArea("What is the Title of the Book? ");
         this.authorArea = new JTextArea("Who is the Author of the Book? ");
         this.libraryArea = new JTextArea("Which library would you like the book to go to? ");
+        authorArea.setEditable(false);
+        libraryArea.setEditable(false);
         this.sendbook = new JButton("Send Book");
         eextArea.setEditable(false);
         this.textArea = new JTextArea("");
@@ -236,6 +242,8 @@ public class Gui {
 
 
 
+    //MODIFIES: this
+    //EFFECTS: puts all libraries onto screen
     private void viewLibraries() {
         for (JLabel jl : alllibraries) {
             panel.remove(jl);
@@ -258,6 +266,8 @@ public class Gui {
 
 
 
+    //MODIFIES: this
+    //EFFECTS: adds addBook text options
     public void addBookToGui() {
 
         panel.add(editTextArea);
@@ -271,6 +281,8 @@ public class Gui {
         bookButton();
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds addBooktoLibrary text options
     public void addBookToLib() {
 
         panel.add(eextArea);

@@ -25,7 +25,7 @@ useful information for library books into **one**.
 
 
 
-## **User Stories**
+## **Old User Stories**
 - I want to be able to add a book to my wishlist, specify
   I want to read it, have read it, or am currently reading it,
 - I want to be able to view a list of books in my wishlist
@@ -35,6 +35,12 @@ wishlist to currently reading and completed.
 books to a class/interface with libraries
 - I want to be able to have the choice to save my Booklist before I end the program.
 - I want to be able to reload a previous BookList when restarting my program.
+
+## **Current User Stories**
+- I want to be able to add a Book to my wishlist
+- I want to be able to view my wishlist
+- I want to be able to add a new book to my libraries
+- I want to be able to view my libraries 
 
 ## Citation
 
