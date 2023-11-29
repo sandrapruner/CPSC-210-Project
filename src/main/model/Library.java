@@ -26,6 +26,7 @@ public class Library {
     //EFFECTS: adds a book to list of book.
     public void addBook(Book book) {
         books.add(book);
+        EventLog.getInstance().logEvent(new Event("Book added to Library"));
     }
 
     //REQUIRES: name is of non-zero length

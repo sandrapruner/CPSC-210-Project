@@ -36,6 +36,7 @@ public class WishList implements Writable {
     //EFFECTS: adds a Book to list of Books in WishList.
     public void addBook(Book b) {
         wishlist.add(b);
+        EventLog.getInstance().logEvent(new Event("Book Added To WishList"));
     }
 
     //EFFECTS: returns string of WishList

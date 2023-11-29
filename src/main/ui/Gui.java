@@ -1,8 +1,7 @@
 package ui;
 
-import model.Book;
-import model.Library;
-import model.WishList;
+import model.*;
+import model.Event;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -69,6 +68,7 @@ public class Gui {
             }
         });
 
+
         this.panel = new JPanel();
         panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
         panel.setPreferredSize(new Dimension(1000, 1000));
@@ -106,6 +106,14 @@ public class Gui {
 
 
         addText();
+
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                close();
+            }
+        });
+
     }
 
     //MODIFIES: this
@@ -165,7 +173,16 @@ public class Gui {
         frame.setTitle("WishList");
         frame.pack();
         frame.setVisible(true);
+
+
     }
+
+    private void close() {
+        for (Event e : EventLog.getInstance()) {
+            System.out.println(e.toString());
+        }
+    }
+
 
     //MODIFIES: this
     //EFFECTS: creates loadWishList button
@@ -305,6 +322,8 @@ public class Gui {
         libButton();
     }
 
+
+
     //MODIFIES: this
     //EFFECTS: creates New lib button
     private void libButton() {
@@ -331,6 +350,7 @@ public class Gui {
                 initializeFrame();
             }
         });
+
     }
 
     //MODIFIES: this
@@ -440,8 +460,6 @@ public class Gui {
     //EFFECTS: creates 2 libraries and 3 books, adds books to libraries.
     //          creates empty WishList.
     private void create() {
-        String sep = System.getProperty("file.separator");
-
         this.library1 = new ArrayList<>();
         this.library2 = new ArrayList<>();
         this.book1 = new Book("Politics", "Aristotle", getImageIcon("Politics.png"));
