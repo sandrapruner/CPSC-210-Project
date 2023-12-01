@@ -27,9 +27,8 @@ public class Event {
 	 * @return  the date of the event
 	 */
     public Date getDate() {
-
         return dateLogged;
-	}
+    }
 	
 	/**
 	 * Gets the description of this event.
