@@ -45,3 +45,16 @@ books to a class/interface with libraries
 ## Citation
 
 "Code influced by the JsonSerizalizationDemo https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+and Alarm System https://github.students.cs.ubc.ca/CPSC210/AlarmSystem.git
+
+
+
+
+## Phase 4 Task 3:
+If I were to refactor my design I would refactor WishList and Library into being the same class, 
+I would do this because as time went on and I added more applications, Library and WishList became increasingly similar. 
+In my current design I have multiple methods whose nearly only difference is the fact that one is working on a Library
+and the other is working on the WishList. If I refactored the two to be the same class, I would be able to greatly 
+simplify my gui methods, and refactor many into few. 
+Additionally I may refactor my GUI into different classes, as I feel there is too much going on in the one class. I 
+would potentially have different classes that add things to the screen, or change the libraries etc.
